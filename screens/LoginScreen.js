@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet, Pressable, TextInput, SafeAreaView, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Constants from 'expo-constants';
@@ -6,9 +6,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function LoginScreen() {
   const navigation = useNavigation();
-  const [username, onChangeUsername] = React.useState('');
-  const [password, onChangePassword] = React.useState('');
-
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   const onPress1 = () => {
     //login logic
@@ -25,122 +24,123 @@ export default function LoginScreen() {
     navigation.navigate('CreateAccount');
   };
 
-
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.paragraph1}> welcome to leaf </Text>
-      <Image style={styles.logo} source={require('./images/leaf.png')} />
-      <Text style={styles.paragraph2}> login </Text>
+        <Icon style={styles.logo} name="leaf" size={50} color="#666" />
+        <Text style={styles.logoText}>Welcome to Leaf</Text>
+        {/* <Image style={styles.logo} source={require('./images/leaf.png')} /> */}
+        <Text style={styles.loginText}>Login</Text>
 
-      <TextInput
-        style={styles.input} 
-        onChangeText={ (username) => onChangeUsername(username)} 
-        value={username}
-        placeholder = "username"
-      />
-      
+        <View style={styles.inputContainer}>
+          <Icon style={styles.icon} name="user" size={20} color="#666" />
+          <TextInput 
+            style={styles.input} 
+            onChangeText={setUsername} 
+            value={username}
+            placeholder="Username"
+          />
+        </View>
+        
+        <View style={styles.inputContainer}>
+          <Icon style={styles.icon} name="lock" size={20} color="#666" />
+          <TextInput
+            style={styles.input} 
+            onChangeText={setPassword} 
+            value={password} 
+            placeholder="Password" 
+            secureTextEntry
+          />
+        </View>
 
-      <TextInput
-        style={styles.input} 
-        onChangeText={ (password) => onChangePassword(password)} 
-        value={password} 
-        placeholder = "password" 
-      />
+        <Pressable style={styles.button} onPress={onPress1}>
+          <Text style={styles.buttonWords}>Sign In →</Text>
+        </Pressable>
 
-      <Pressable style={styles.button} onPress={onPress1}>
-        <Text style={styles.buttonWords}> sign in </Text> 
-      </Pressable>
+        <Pressable style={styles.button2} onPress={onPress2}>
+          <Text style={styles.buttonWords}>Create Account →</Text>
+        </Pressable>
 
-      <Pressable style={styles.button2} onPress={onPress2}>
-        <Text style={styles.buttonWords}> create an account </Text> 
-      </Pressable>
-
-      <Text style={styles.paragraph3}> 
-      By signing into Leaf, you agree to our user agreememnt 
-      </Text>
-
+        <Text style={styles.agreementText}>
+          By signing into Leaf, you agree to our user agreement
+        </Text>
     </SafeAreaView>
   );
-
 }
 
 const styles = StyleSheet.create({
-  input: {
-    flexDirection: 'row', // To align icon and text horizontally
-    alignItems: "center",
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: '#aad6a9',
+    alignItems: 'center', // Center the box horizontally
+    padding: 16,
+  },
+  logoText: {
+    fontSize: 35,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#fff',
+    marginVertical: 15,
+  },
+  logo: {
+    marginBottom: 30,
+  },
+  loginText: {
+    fontSize: 27,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#fff',
+    marginBottom: 10,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     height: 40,
-    margin: 10,
-    borderWidth: 1,
+    marginVertical: 10,
+    borderWidth: 0,
     padding: 10,
-    backgroundColor: 'white',
-    color: '#aad6a9',
-    borderColor: 'white',
+    backgroundColor: '#fff',
     borderRadius: 4,
+    width: '75%',
+  },
+  icon: {
+    marginRight: 10,
+  },
+  logo: {
+  },
+  input: {
+    flex: 1,
+    color: '#aad6a9',
   },
   button: {
     width: '30%',
-    marginLeft: '35%',
     height: 40,
-    alignItems: "center",
+    alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 4,
-    margin: 15,
+    marginVertical: 15,
     backgroundColor: '#bfe6be',
   },
   button2: {
     width: '50%',
-    marginLeft: '25%',
     height: 40,
-    alignItems: "center",
+    alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 4,
-    margin: 15,
+    marginVertical: 5,
     backgroundColor: '#bfe6be',
   },
   buttonWords: {
     fontSize: 15,
     fontWeight: 'bold',
-    letterSpacing: 0.50,
-    color: 'white',
+    letterSpacing: 0.5,
+    color: '#fff',
   },
-  paragraph1: {
-    flex: 0.3,
-    margin: 15,
-    fontSize: 35,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: "white",
-  },
-  paragraph2: {
-    flex: 0,
-    margin: 5,
-    fontSize: 30,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: "white",
-  },
-  paragraph3: {
-    topMargin: 30,
-    margin: 30,
+  agreementText: {
+    marginVertical: 10,
     fontSize: 10,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: "white",
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: '#aad6a9',
-    padding: 8,
-  },
-  logo: {
-    justifyContent: 'center',
-    width: '30%',
-    marginLeft: '35%',
-    height: 128,
+    color: '#fff',
   },
 });
-
-
-
