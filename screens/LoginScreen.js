@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet, Pressable, TextInput, SafeAreaView, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Constants from 'expo-constants';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/AntDesign';
+import LeafIcon from 'react-native-vector-icons/FontAwesome5';
+
 
 export default function LoginScreen() {
   const navigation = useNavigation();
@@ -26,7 +28,7 @@ export default function LoginScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
-        <Icon style={styles.logo} name="leaf" size={50} color="#666" />
+        <LeafIcon style={styles.logo} name="leaf" size={50} color="#666" />
         <Text style={styles.logoText}>Welcome to Leaf</Text>
         {/* <Image style={styles.logo} source={require('./images/leaf.png')} /> */}
         <Text style={styles.loginText}>Login</Text>
@@ -61,7 +63,7 @@ export default function LoginScreen() {
         </Pressable>
 
         <Text style={styles.agreementText}>
-          By signing into Leaf, you agree to our user agreement
+          By signing in to Leaf, you agree to our user agreement.
         </Text>
     </SafeAreaView>
   );

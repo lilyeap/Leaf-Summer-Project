@@ -1,8 +1,10 @@
-import React from 'react';
-import Constants from 'expo-constants';
-import { useState } from 'react';
-import { View, Text, SafeAreaView, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Button, StyleSheet, Pressable, TextInput, SafeAreaView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Constants from 'expo-constants';
+import LeafIcon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/AntDesign';
+
 
 export default function CreateAccountScreen() {
   const navigation = useNavigation();
@@ -12,8 +14,12 @@ export default function CreateAccountScreen() {
   const [password, setPassword] = useState('');
   const [passwordCopy, confirmPassword] = useState('');
 
-  const onPress1 = () => {
+  const successSignupPress = () => {
     navigation.navigate('Intro');
+  };
+  
+  const backToLoginPress = () => {
+    navigation.navigate('Login'); 
   };
 
   // For making the account
@@ -38,101 +44,138 @@ export default function CreateAccountScreen() {
       });
   };
 
-
   return (
-    <SafeAreaView style = {styles.container}>
-      <Text style = {styles.title}> create your account </Text>
+    <SafeAreaView style={styles.container}>
+        <TouchableOpacity style={styles.backButton} onPress={backToLoginPress}>
+          <Icon name="arrowleft" size={25} color="#666" />
+        </TouchableOpacity>
 
-      <TextInput
-        placeholder = {'name'}
-        value = {name}
-        autoCapitalize = 'words'
-        autoCompleteType = 'name'
-        onChangeText = { (text) => setName(text) }
-        style = {styles.textInput}
-      />
-      <TextInput
-        placeholder = {'email'}
-        value = {email}
-        autoCapitalize = 'none'
-        autoCompleteType = 'email'
-        onChangeText = { (text) => setEmail(text) }
-        style = {styles.textInput} 
-      />
+        <LeafIcon style={styles.logo} name="leaf" size={50} color="#666" />
+        {/* <Image style={styles.logo} source={require('./images/leaf.png')} /> */}
+        <Text style={styles.createText}>Create Account</Text>
 
-      <TextInput
-        placeholder = {'create password'}
-        value = {password}
-        autoCapitalize = 'none'
-        // secureTextEntry = {true}
-        onChangeText = { (text) => setPassword(text) }
-        style = {styles.textInput} 
-      />
+        <View style={styles.inputContainer}>
+          <Icon style={styles.icon} name="user" size={20} color="#666" />
+          <TextInput 
+            placeholder = {'name'}
+            value = {name}
+            autoCapitalize = 'words'
+            autoCompleteType = 'name'
+            onChangeText = { (text) => setName(text) }
+            style = {styles.textInput}
+          />
+        </View>
+        
+        <View style={styles.inputContainer}>
+          <Icon style={styles.icon} name="mail" size={20} color="#666" />
+          <TextInput
+            placeholder = {'email'}
+            value = {email}
+            autoCapitalize = 'none'
+            autoCompleteType = 'email'
+            onChangeText = { (text) => setEmail(text) }
+            style = {styles.textInput}
+          />
+        </View>
 
-      <TextInput
-        placeholder = {'confirm password'}
-        value = {passwordCopy}
-        autoCapitalize = 'none'
-        // secureTextEntry = {true}
-        onChangeText = { (text) => confirmPassword(text) }      
-        style = {styles.textInput} 
-      />
+        <View style={styles.inputContainer}>
+          <Icon style={styles.icon} name="lock" size={20} color="#666" />
+          <TextInput 
+            placeholder = {'create password'}
+            value = {password}
+            autoCapitalize = 'none'
+            // secureTextEntry = {true}
+            onChangeText = { (text) => setPassword(text) }
+            style = {styles.textInput} 
+          />
+        </View>
+        
+        <View style={styles.inputContainer}>
+          <Icon style={styles.icon} name="lock" size={20} color="#666" />
+          <TextInput
+            placeholder = {'confirm password'}
+            value = {passwordCopy}
+            autoCapitalize = 'none'
+            // secureTextEntry = {true}
+            onChangeText = { (text) => confirmPassword(text) }      
+            style = {styles.textInput} 
+          />
+        </View>
 
-      <TouchableOpacity style = {styles.button} onPress = {onPress1}> 
-        <Text style = {styles.buttonText}> Join </Text>
-      </TouchableOpacity>
+        <TouchableOpacity style = {styles.button} onPress = {successSignupPress}> 
+          <Text style = {styles.buttonText}> Join </Text>
+        </TouchableOpacity>
 
+        <Text style={styles.agreementText}>
+          By signing up for Leaf, you agree to our user agreement.
+        </Text>
     </SafeAreaView>
   );
 }
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 8,
     justifyContent: 'center',
-    backgroundColor: 'white',
-    paddingTop: Constants.statusBarHeight    
+    backgroundColor: '#aad6a9',
+    alignItems: 'center', // Center the box horizontally
+    padding: 16,
   },
-  title: {
-    margin: 24,
-    marginBottom: 50,
-    fontSize: '35%',
-    color: '#8ec3a3',
+  backButton: {
+    position: 'absolute',
+    top: 30,
+    left: 30,
+    zIndex: 1,
+  },
+  createText: {
+    fontSize: 27,
     fontWeight: 'bold',
     textAlign: 'center',
-    fontFamily: 'Calibri',
+    color: '#fff',
+    marginBottom: 10,
+    marginVertical: 15,
   },
-  textInput: {
-    width: '70%',
-    height: '6.25%',
-    margin: '4%',
-    color: '#a3a8a2',
-    marginLeft: '18%',
-    padding: 10,
-    borderWidth: 1,
-    borderRadius: 5,
-    borderColor: '#e8e8e8',
-    backgroundColor: 'white',
+  inputContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center'
+    height: 40,
+    marginVertical: 10,
+    borderWidth: 0,
+    padding: 10,
+    backgroundColor: '#fff',
+    borderRadius: 4,
+    width: '75%',
+  },
+  icon: {
+    marginRight: 10,
+  },
+  logo: {
+    marginVertical: 10,
+  },
+  input: {
+    flex: 1,
+    color: '#aad6a9',
   },
   button: {
-    margin: '5%',
-    marginTop: 50,
-    marginLeft: '35%',
-    padding: 10,
-    width: '35%',
-    borderRadius: 5,
+    width: '50%',
+    height: 40,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#E1F4E5',
+    borderRadius: 4,
+    marginVertical: 5,
+    backgroundColor: '#bfe6be',
   },
-
   buttonText: {
-    fontSize: '20',
-    color: '#8ec3a3',
-    fontFamily: 'Calibri',
-  }
-  });
+    fontSize: 15,
+    fontWeight: 'bold',
+    letterSpacing: 0.5,
+    color: '#fff',
+  },
+  agreementText: {
+    marginVertical: 10,
+    fontSize: 10,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#fff',
+  },
+});
